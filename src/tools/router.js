@@ -10,6 +10,10 @@ module.exports = function router(reqBody, method, path, id) {
         return setResponse(404, "Not Found", "Path not found");
     }
     if (!id) {
+
+        //TODO check all field of Person object - id, name, age, hobbies
+        // check id structure
+
         switch (method) {
             case 'POST':
                 return setResponse(200, "OK", addPerson(reqBody));
@@ -44,7 +48,7 @@ module.exports = function router(reqBody, method, path, id) {
             case 'DELETE':
                 // setResponse(response, `deleted= ${id}`);
                 delPerson(id)
-                return setResponse(200, "OK", `Person ${id} deleted`);
+                return setResponse(204, "OK", `Person ${id} deleted`);
                 break;
 
             default:

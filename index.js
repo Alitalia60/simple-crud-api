@@ -1,6 +1,6 @@
 const http = require('http');
 
-const router = require("./lib/tools/router")
+const router = require("./src/tools/router")
 
 const dotenv = require('dotenv');
 const { checkPrime } = require('crypto');
