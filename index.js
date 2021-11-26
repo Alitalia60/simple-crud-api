@@ -3,6 +3,7 @@ const http = require('http');
 const router = require("./lib/tools/router")
 
 const dotenv = require('dotenv');
+const { checkPrime } = require('crypto');
 const envParsed = dotenv.config().parsed;
 if (envParsed.error) {
     throw envParsed.error
@@ -20,6 +21,8 @@ server.on('request', reqHandler);
 function reqHandler(request, response) {
     // response.end("response = OK");
     let { url, method, headers } = request;
+
+
     const [path, id] = url.split("/").splice(1);
     reqBody = [];
     request.on('error', (err) => console.log(err));
