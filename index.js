@@ -1,12 +1,14 @@
 const http = require('http');
-const dotenv = require('dotenv');
 
 const router = require("./lib/tools/router")
 
+const dotenv = require('dotenv');
 const envParsed = dotenv.config().parsed;
 if (envParsed.error) {
     throw envParsed.error
 }
+
+
 const host = envParsed.HOST || 'localhost';
 const port = envParsed.PORT || 3000;
 exports.global = staff = [];
@@ -33,6 +35,6 @@ function reqHandler(request, response) {
         response.end();
     });
 
-    console.log("staff=", staff);
+    // console.log("staff=", staff);
 }
 
