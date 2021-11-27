@@ -9,12 +9,13 @@ module.exports = class Person {
         this.hobbies = objPerson.hobbies;
     }
 
-    // updatePerson(newName = this.name, newAge = this.age, newHobbies = this.hobbies) {
     updatePerson(jsonPerson) {
         const objPerson = JSON.parse(jsonPerson);
-        this.name = objPerson.name;
-        this.age = objPerson.age;
-        this.hobbies = objPerson.Hobbies;
+        for (const key in objPerson) {
+            if (Object.hasOwnProperty.call(this, key)) {
+                this[key] = objPerson[key]
+            }
+        }
     }
 
 };

@@ -1,49 +1,48 @@
 const Person = require('../classes/Person')
 
-function findPersonById(id) {
+function checkStructure(reqBody) {
+    let checkResult = true;
+    const correctStrucrure = ["name", "age", "hobbies"];
+    let reqBodyToObject = JSON.parse(reqBody);
+    correctStrucrure.forEach(key => {
+        if (!reqBodyToObject[key]) {
+            checkResult = false
+        }
+    })
+    return checkResult
+}
+
+function isExistPersById(id) {
     return staff.find((item) => item.id == id)
-};
+}
+
+function getPersonById(id) {
+    return staff.find((item) => item.id == id)
+}
 
 function addPerson(jsonPerson) {
     try {
         const newPerson = new Person(jsonPerson);
         staff.push(newPerson);
         return newPerson;
-
     } catch (error) {
-
         return undefined
     }
 }
 
 function delPerson(id) {
-    let fp = findPersonById(id);
-    if (fp) {
-        staff.splice(staff.indexOf(fp), 1)
-    }
-    else {
-        console.log(`not found ${id}. Error deleting`);
-    }
+    staff.splice(staff.indexOf(getPersonById(id)), 1)
 }
 
-function getPerson(id = undefined) {
-    if (!id) {
-        return staff
-    }
-    else {
-        return findPersonById(id);
-    }
+function updPerson(id, jsonPerson) {
+    getPersonById(id).updatePerson(jsonPerson);
 }
 
-function updPerson(id, jsonPersony) {
-    let pers = findPersonById(id);
-    if (!pers) {
-        return undefined;
-    }
-    else {
-        pers.updatePerson(jsonPerson);
-        return pers
-    }
+module.exports = {
+    addPerson,
+    getPersonById,
+    delPerson,
+    updPerson,
+    isExistPersById,
+    checkStructure
 }
-
-module.exports = { addPerson, getPerson, delPerson, updPerson, findPersonById }

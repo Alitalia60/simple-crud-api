@@ -1,60 +1,38 @@
-const { getPerson, updPerson, delPerson, addPerson } = require('./personAction');
+const { postHandl, putHandl, getHandl, delHandl, setResponseSet } = require("./oper.js");
+const { isExistPersById } = require("../tools/personAction")
 
-function setResponse(code = 200, mes = "OK", body = "") {
-    return { resStatus: code, resMessage: mes, resBody: JSON.stringify(body) };
+function router(url, method) {
+    const routHandler = {
+        'GET': getHandl,
+        'POST': postHandl,
+        'PUT': putHandl,
+        'DELETE': delHandl
+    }
 
-}
-module.exports = function router(reqBody, method, path, id) {
-
+    const [path, id] = url.split("/").splice(1);
     if ((path != 'person') || (id == '')) {
-        return setResponse(404, "Not Found", "Path not found");
+        setResponseSet(404, "Not Found", `router 0.Path ${url} not valid`);
+        return
     }
-    if (!id) {
 
-        //TODO check all field of Person object - id, name, age, hobbies
-        // check id structure
+    if ((id == undefined) && ((method == 'GET') || (method == 'POST'))) {
+        routHandler[method]()
+        return
+    }
 
-        switch (method) {
-            case 'POST':
-                return setResponse(200, "OK", addPerson(reqBody));
-                break;
-
-            case 'GET':
-                return setResponse(200, "OK", staff.length == 0 ? 'No records' : staff);
-                break
-
-            default:
-                return setResponse(404, "Bad request", "Unsupported method");
-                break;
+    if (id) {
+        if (method != 'POST') {
+            if (isExistPersById(id)) {
+                routHandler[method](id)
+            }
+            else {
+                setResponseSet(404, "Not Found", `router 1. id not found`);
+            }
         }
-        // response.write(getPerson());
-    }
-    else {
-        switch (method) {
-            case 'GET':
-                if (!getPerson(id)) {
-                    return setResponse(404, "Not found", `Person ${id} not found`);
-                }
-                return setResponse(200, "OK", getPerson(id));
-                break
-
-            case 'PUT':
-                if (!getPerson(id)) {
-                    return setResponse(404, "Not found", `Person ${id} not found`);
-                }
-                return setResponse(200, "OK", updPerson(id, reqBody));
-                break;
-
-            case 'DELETE':
-                // setResponse(response, `deleted= ${id}`);
-                delPerson(id)
-                return setResponse(204, "OK", `Person ${id} deleted`);
-                break;
-
-            default:
-                return setResponse(404, "Bad request", "Unsupported method");
-                break;
+        else {
+            setResponseSet(404, "Not Found", `router 2. id not expected`);
         }
     }
-    return
 }
+
+module.exports = { router }
