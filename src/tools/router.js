@@ -1,7 +1,19 @@
 const { postHandl, putHandl, getHandl, delHandl, setResponseSet } = require("./oper.js");
 const { isExistPersById } = require("../tools/personAction")
-const ErrorHttp = require("./errors");
-const statusCode = require("./statusCodes.json")
+const ErrorHttp = require("../classes/Errors");
+const { v4: validate } = require('uuid');
+
+
+function isValidUUID(uuid) {
+    let s = "" + uuid;
+
+    s = s.match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');
+    if (s === null) {
+        return false;
+    }
+    return true;
+}
+
 
 function router(url, method) {
     const routHandler = {
@@ -25,17 +37,23 @@ function router(url, method) {
     }
 
     if (id) {
-        if (method != 'POST') {
-            if (isExistPersById(id)) {
-                routHandler[method](id)
-            }
-            else {
-                setResponseSet(404, `Person with id=${id} not found`);
-            }
+        if (!isValidUUID(id)) {
+            setResponseSet(400, 'Passed id not valid');
         }
         else {
-            setResponseSet(404, `Person Id  not expected`);
+            if (method != 'POST') {
+                if (isExistPersById(id)) {
+                    routHandler[method](id)
+                }
+                else {
+                    setResponseSet(404, `Person with id=${id} not found`);
+                }
+            }
+            else {
+                setResponseSet(404, `Person Id  not expected`);
+            }
         }
+
     }
 }
 

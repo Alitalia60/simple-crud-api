@@ -38,3 +38,12 @@ and it is not not valid structure of record !!
 
 If not valid _path_ or _id_ passed API returns error, no action to be done in record(s)
 If passed other non listed above method, server returns error.
+
+**_installation_**
+npm install
+
+_Start server in development mode_
+npm run dev
+
+_starting the server in prodaction mode_
+npm run build
