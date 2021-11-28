@@ -1,9 +1,8 @@
 const http = require('http');
-const { router } = require("./src/tools/router")
-const { getResponseSet } = require("./src/tools/oper")
+const { router } = require("./tools/router")
+const { getResponseSet } = require("./tools/oper")
 const dotenv = require('dotenv');
-const statusCode = require("./src/tools/statusCodes");
-const errorHttp = require('./src/tools/errors');
+const errorHttp = require('../src/classes/Errors');
 
 const envParsed = dotenv.config().parsed;
 if (envParsed.error) {

@@ -1,4 +1,4 @@
-const errorHttp = require("./errors");
+const errorHttp = require("../classes/Errors");
 const { isExistPersById,
     getPersonById,
     addPerson,
@@ -44,7 +44,7 @@ function putHandl(id) {
         }
         else {
             setResponseSet(400, `Person with id=${id} not found`);
-            throw new errorHttp(400, 'Person with id=${id} not found')
+            // throw new errorHttp(400, 'Person with id=${id} not found')
         }
 
     } catch (error) {
@@ -56,7 +56,7 @@ function putHandl(id) {
 function delHandl(id) {
     delPerson(id);
     if (!isExistPersById(id)) {
-        setResponseSet(200, 'Person deleted');
+        setResponseSet(204, 'Person deleted');
     }
     else {
         setResponseSet(500, "Server can't delete person");

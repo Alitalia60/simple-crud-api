@@ -1,0 +1,42 @@
+
+const { staff } = require("../index")
+const Person = require("../src/classes/Person")
+const { router } = require("../src/tools/router");
+const { getPerson, updPerson, delPerson, addPerson } = require('../src/tools/personAction');
+const { getResponseSet } = require("../src/tools/oper");
+
+let arrayURL = [];
+let resSet = {};
+let method = 'GET';
+
+beforeEach(() => { resSet = {} })
+
+describe('Test GET list of persons', () => {
+    arrayURL = [
+        ['/persons', 400],
+        ['/persons/', 400],
+        ['/person', 200],
+        ['/person/opoite-543-gd-34454', 404]
+    ]
+    test.only.each(arrayURL)(`on  $sitemURL expect $dcode`, (itemURL, code) => {
+        console.log(itemURL);
+        router(itemURL, method);
+        expect(getResponseSet().resStatus).toBe(code)
+    });
+});
+
+
+describe('Test PUT new person', () => {
+    arrayURL = [
+        ['/persons', 400],
+        ['/persons/', 400],
+        ['/person', 400],
+        ['/person/opoite-543-gd-34454', 404]
+    ]
+
+    method = 'PUT';
+    test.each(arrayURL)('on  "$itemURL" expect $dcode', (itemURL, code) => {
+        router(itemURL, method);
+        expect(getResponseSet().resStatus).toBe(code)
+    });
+});
