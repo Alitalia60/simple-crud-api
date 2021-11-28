@@ -29,8 +29,8 @@ hostname is stored in .env file (default HOST='localhost')
 4. Update record of person with passed _id_:
    request method = **PUT** path= **_http://localhost:port/person/id_**
 
-Note: it's allowed to pass only options (fields) to be updated: e.g:
-{age: 25}
+***Note***: it's allowed to pass only options (fields) to be updated: e.g:
+{age: 25} or {name:"Bob", hobbies:[]}
 and it is not not valid structure of record !!
 
 5. Delete record of person with passed _id_:
@@ -40,10 +40,13 @@ If not valid _path_ or _id_ passed API returns error, no action to be done in re
 If passed other non listed above method, server returns error.
 
 **_installation_**
+
 npm install
 
 _Start server in development mode_
+
 npm run dev
 
 _starting the server in prodaction mode_
+
 npm run build
