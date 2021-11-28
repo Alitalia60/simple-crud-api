@@ -11,7 +11,7 @@ function router(url, method) {
 
     const [path, id] = url.split("/").splice(1);
     if ((path != 'person') || (id == '')) {
-        setResponseSet(404, "Not Found", `router 0.Path ${url} not valid`);
+        setResponseSet(400, `Path ${url} not valid`);
         return
     }
 
@@ -26,11 +26,11 @@ function router(url, method) {
                 routHandler[method](id)
             }
             else {
-                setResponseSet(404, "Not Found", `router 1. id not found`);
+                setResponseSet(404, `Person with id=${id} not found`);
             }
         }
         else {
-            setResponseSet(404, "Not Found", `router 2. id not expected`);
+            setResponseSet(404, `Person Id  not expected`);
         }
     }
 }

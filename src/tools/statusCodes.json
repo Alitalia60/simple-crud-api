@@ -1,0 +1,8 @@
+{
+  "200": "Status OK",
+  "201": "Person was created",
+  "204": "Person was deleted",
+  "400": "Request not valid. Wrong ID",
+  "404": "Person not found",
+  "500": "Person not found"
+}

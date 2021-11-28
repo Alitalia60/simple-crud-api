@@ -1,24 +1,40 @@
- Simple CRUD API
+**_Simple CRUD API_**
 
-Your task is to implement simple CRUD API using in-memory database underneath.  
-NB! You must create new repository for this task. Its name must be `simple-crud-api` i.e. full link to the repository must be `https://github.com/%your-gihub-id%/simple-crud-api`.
+API is able to _create, read, update_ and _delete_ records of virtual database.
+Records contain next fields: _id, name, age_ and array _hobbies_
+e.g:
 
-## Details:
+{id: 4b62f49c-fb81-426e-aa42-49355280d11b,
+name: "Bob,
+age: 25,
+hobbies: ["fising", "women"]}
 
-1. The task must be solved using only **pure Node.js**. Any libraries and packages (except `nodemon`, `eslint` and its plugins, `prettier` and its plugins, `uuid`, `webpack` and its plugins, testing tools, `dotenv`, `cross-env`) **are prohibited**.
-2. API path `/person`:
-    * **GET** `/person` or `/person/${personId}` should return all persons or person with corresponding `personId`
-    * **POST** `/person` is used to create record about new person and store it in database
-    * **PUT** `/person/${personId}` is used to update record about existing person
-    * **DELETE** `/person/${personId}` is used to delete record about existing person from database
-3. Persons are stored as `objects` that have following properties:
-    * `id` — unique identifier (`string`, `uuid`) generated on server side
-    * `name` — person's name (`string`, **required**)
-    * `age` — person's age (`number`, **required**)
-    * `hobbies` — person's hobbies (`array` of `strings` or empty `array`, **required**)
-4. Requests to non-existing endpoints (e.g. `/some-non/existing/resource`) should be handled.
-5. Internal server errors should be handled and processed correctly.
-6. Value of port on which application is running should be stored in `.env` file.
-7. There should be 2 modes of running application: **development** and **production**
-8. There could be some tests for API.
+where _id_ of record assign by API itself
 
+API request contains:
+
+path = http://hostname:port/person
+where: port is stored in file .env (default PORT = 3000);
+hostname is stored in .env file (default HOST='localhost')
+
+1. Get and show records of all persons:
+   request method = **GET** path= **_http://localhost:port/person_**
+
+2. Get and show record of person with passed _id_:
+   request method = **GET** path= **_http://localhost:port/person/id_**
+
+3. Create new record of person:
+   request method = **POST** path= **_http://localhost:port/person_**
+
+4. Update record of person with passed _id_:
+   request method = **PUT** path= **_http://localhost:port/person/id_**
+
+Note: it's allowed to pass only options (fields) to be updated: e.g:
+{age: 25}
+and it is not not valid structure of record !!
+
+5. Delete record of person with passed _id_:
+   request method = **DELETE** path= **_http://localhost:port/person/id_**
+
+If not valid _path_ or _id_ passed API returns error, no action to be done in record(s)
+If passed other non listed above method, server returns error.

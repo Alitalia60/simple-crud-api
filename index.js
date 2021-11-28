@@ -1,17 +1,16 @@
 const http = require('http');
-
 const { router } = require("./src/tools/router")
 const { getResponseSet } = require("./src/tools/oper")
-
 const dotenv = require('dotenv');
-const { checkPrime } = require('crypto');
+const statusCode = require("./src/tools/statusCodes");
+
 const envParsed = dotenv.config().parsed;
 if (envParsed.error) {
     throw envParsed.error
 }
-
 const host = envParsed.HOST || 'localhost';
 const port = envParsed.PORT || 3000;
+
 exports.global = staff = [];
 
 const server = http.createServer();

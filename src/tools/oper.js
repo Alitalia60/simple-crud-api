@@ -5,8 +5,11 @@ const { isExistPersById,
     updPerson,
     checkStructure } = require("./personAction")
 
+const statusCode = require("./statusCodes")
+
 let resSet = {}
-function setResponseSet(code = 200, mes = "OK", body = "") {
+function setResponseSet(code, body = "") {
+    let mes = statusCode[code];
     resSet = { resStatus: code, resMessage: mes, resBody: JSON.stringify(body) };
 }
 
@@ -18,46 +21,52 @@ function postHandl(id = undefined) {
         try {
             let newPerson = addPerson(reqBody);
             if (isExistPersById(newPerson.id)) {
-                setResponseSet(200, "OK", newPerson);
+                setResponseSet(200, newPerson);
             }
             else {
-                setResponseSet(500, "Server error", 'oper 1. New person is not created');
+                setResponseSet(500, 'New person not created');
             }
         } catch (error) {
-            setResponseSet(500, "Server error", 'oper 2. Can not store record');
+            setResponseSet(500, "Server can't store record");
         }
     }
     else {
-        setResponseSet(400, "Bad request", 'Structure person not valid, expect: "name, age, hobbies" ');
+        setResponseSet(400, 'Structure person not valid, expect: "name, age, hobbies" ');
     }
 };
 
 function putHandl(id) {
-    updPerson(id, reqBody);
-    if (isExistPersById(id)) {
-        setResponseSet(200, "OK", getPersonById(id));
-    }
-    else {
-        setResponseSet(500, "Server error", 'oper 3. Person is not updated');
+    try {
+        updPerson(id, reqBody);
+        if (isExistPersById(id)) {
+            setResponseSet(201, getPersonById(id));
+        }
+        else {
+            setResponseSet(400, `Person with id=${id} not found`);
+        }
+
+    } catch (error) {
+        setResponseSet(500, `Server can't update person with id=${id}`);
+
     }
 };
 
 function delHandl(id) {
     delPerson(id);
     if (!isExistPersById(id)) {
-        setResponseSet(200, "OK", 'Person deleted');
+        setResponseSet(200, 'Person deleted');
     }
     else {
-        setResponseSet(500, "Server error", "oper 4. Can't delete person");
+        setResponseSet(500, "Server can't delete person");
     }
 };
 
 function getHandl(id, body = '') {
     if (id) {
-        setResponseSet(200, "OK", staff.length == 0 ? 'oper 5.There is no records' : getPersonById(id));
+        setResponseSet(200, staff.length == 0 ? 'There are no records' : getPersonById(id));
     }
     else {
-        setResponseSet(200, "OK", staff.length == 0 ? 'oper 6.There is no records' : staff);
+        setResponseSet(200, staff.length == 0 ? 'There are no records' : staff);
     }
 };
 
