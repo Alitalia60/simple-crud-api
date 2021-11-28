@@ -3,6 +3,7 @@ const { router } = require("./src/tools/router")
 const { getResponseSet } = require("./src/tools/oper")
 const dotenv = require('dotenv');
 const statusCode = require("./src/tools/statusCodes");
+const errorHttp = require('./src/tools/errors');
 
 const envParsed = dotenv.config().parsed;
 if (envParsed.error) {
@@ -28,7 +29,7 @@ function reqHandler(request, response) {
         router(url, method);
         let { resStatus, resMessage, resBody } = getResponseSet();
         response.on('error', (err) => {
-            console.error(err);
+            throw new errorHttp(500,)
         });
         response.writeHead(resStatus, resMessage, { 'Content-Type': 'application/json' })
         response.write(resBody);

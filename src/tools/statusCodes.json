@@ -1,8 +1,8 @@
 {
-  "200": "Status OK",
-  "201": "Person was created",
-  "204": "Person was deleted",
-  "400": "Request not valid. Wrong ID",
-  "404": "Person not found",
-  "500": "Person not found"
+  "200": "OK",
+  "201": "Created",
+  "204": "No Content",
+  "400": "Bad Request",
+  "404": "Not Found",
+  "500": "Internal Server Error"
 }

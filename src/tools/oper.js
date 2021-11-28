@@ -1,3 +1,4 @@
+const errorHttp = require("./errors");
 const { isExistPersById,
     getPersonById,
     addPerson,
@@ -43,6 +44,7 @@ function putHandl(id) {
         }
         else {
             setResponseSet(400, `Person with id=${id} not found`);
+            throw new errorHttp(400, 'Person with id=${id} not found')
         }
 
     } catch (error) {
