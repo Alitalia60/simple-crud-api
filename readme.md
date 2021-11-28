@@ -43,10 +43,16 @@ If passed other non listed above method, server returns error.
 
 npm install
 
-_Start server in development mode_
+_Start server_
+
+npm ./src/index.js
+_or_
+npm start
+
+_Start webpack in development mode_
 
 npm run dev
 
-_starting the server in prodaction mode_
+_Start webpack in prodaction mode_
 
 npm run build
