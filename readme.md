@@ -52,18 +52,20 @@ If passed other non listed above method, server returns error.
 
 ## installation
 
-npm install
+`npm install`
 
-_Start server_
+#### Start server
 
-npm ./src/index.js
-_or_
-npm start
+`npm ./src/index.js`
 
-_Start webpack in development mode_
+or
 
-npm run dev
+`npm start`
 
-_Start webpack in prodaction mode_
+#### Start webpack in development mode
 
-npm run build
+`npm run dev`
+
+#### Start webpack in prodaction mode
+
+`npm run build`
